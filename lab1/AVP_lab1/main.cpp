@@ -5,9 +5,9 @@
 #include <windows.h>
 #include <xmmintrin.h>
 
-const int EXTERNAL_SIZE = 2;
-const int INTERNAL_STRINGS = 2;
-const int INTERNAL_COLOMNS = 2;
+const int EXTERNAL_SIZE = 400;
+const int INTERNAL_STRINGS = 4;
+const int INTERNAL_COLOMNS = 8;
 
 const int MILISECONDS = 1000;
 
@@ -27,15 +27,13 @@ float **CreateMatrix(const int external_size, const int internal_strings, const 
 
 void FillMatrix(float **data, const int external_size, const int internal_strings, const int internal_colomns)
 {
-	/*srand((unsigned)time(NULL));*/
-	float counter = 1;
+	srand((unsigned)time(NULL));
 	
 	for (int i = 0; i < external_size * external_size; i++)
 	{
 		for (int j = 0; j < internal_strings * internal_colomns; j++)
 		{
-			/*data[i][j] = (float)(rand() % UPPER_BOUND) / DELIMETER;*/
-			data[i][j] = counter++;
+			data[i][j] = (float)(rand() % UPPER_BOUND) / DELIMETER;			
 		}
 	}
 }
@@ -178,19 +176,15 @@ int main()
 
 	start = GetTickCount();	
 	MatrixMultiply(A, B, C, EXTERNAL_SIZE, INTERNAL_STRINGS, INTERNAL_COLOMNS);	
-	end = GetTickCount();
-
-	ShowMatrix(C, EXTERNAL_SIZE, INTERNAL_STRINGS, INTERNAL_STRINGS);
+	end = GetTickCount();	
 	
 
 	printf("Mutiplication time: %.3lf\n", (double)(end - start) / MILISECONDS);	
 
 
-	/*start = GetTickCount();
+	start = GetTickCount();
 	MatrixMultiplySSE(A, B, D, EXTERNAL_SIZE, INTERNAL_STRINGS, INTERNAL_COLOMNS);
 	end = GetTickCount();
-
-	
 
 	
 	printf("Multiplication using SSE: %0.3lf\n", (double)(end - start) / MILISECONDS);
@@ -203,7 +197,7 @@ int main()
 	else
 	{
 		printf("\nMatrixes aren't equal");
-	}*/
+	}
 
 	DeleteMatrix(A, EXTERNAL_SIZE, INTERNAL_STRINGS, INTERNAL_COLOMNS);
 	DeleteMatrix(B, EXTERNAL_SIZE, INTERNAL_COLOMNS, INTERNAL_STRINGS);
